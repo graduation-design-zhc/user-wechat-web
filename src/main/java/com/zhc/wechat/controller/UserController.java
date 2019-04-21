@@ -28,13 +28,12 @@ public class UserController {
 
     @PostMapping("/user/add")
     public Boolean addUser(@RequestBody UserRequest userRequest) {
-        //TODO
-        return true;
+        return userService.addUser(userRequest);
     }
 
     @PostMapping("/user/delete")
     public Boolean deleteUser(@RequestParam("id") String uid) {
-        return true;
+        return userService.deleteUser(uid);
     }
 
 }
