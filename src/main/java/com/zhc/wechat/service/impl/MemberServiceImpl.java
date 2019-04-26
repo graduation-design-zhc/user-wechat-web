@@ -1,6 +1,7 @@
 package com.zhc.wechat.service.impl;
 
 import com.user.wechat.api.dto.MemberDTO;
+import com.user.wechat.api.request.MemberRequest;
 import com.user.wechat.api.response.Response;
 import com.zhc.wechat.external.UserWechatClient;
 import com.zhc.wechat.service.MemberService;
@@ -37,4 +38,23 @@ public class MemberServiceImpl implements MemberService {
         }
         return false;
     }
+
+    @Override
+    public Boolean updateMMember(MemberRequest memberRequest) {
+        Response<Boolean> response = userWechatClient.updateMember(memberRequest);
+        if (response.isSuccess()) {
+            return response.getData();
+        }
+        return false;
+    }
+
+    @Override
+    public MemberDTO saveMember(MemberRequest memberRequest) {
+        Response<MemberDTO> response = userWechatClient.addMember(memberRequest);
+        if (response.isSuccess()) {
+            return response.getData();
+        }
+        return null;
+    }
+
 }

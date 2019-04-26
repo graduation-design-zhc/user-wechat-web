@@ -11,3 +11,8 @@ eureka:
 spring:
   application:
     name: user-wechat-web
+
+wechat:
+  mpAppId: wx4717e81b20c15d7d
+  mpAppSecret: 87c4a22527e102e5edd6afc67638bfee
+  redirectUrl: http://670a1b29.ngrok.io

@@ -21,6 +21,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping("/user/login")
+    public UserDTO userLogin(@RequestBody UserRequest userRequest) {
+        return userService.getUserLogin(userRequest);
+    }
+
     @PostMapping("/user/list")
     public List<UserDTO> getUserList() {
         return userService.getUserList();

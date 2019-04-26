@@ -21,6 +21,8 @@
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <fastjson.version>1.2.4</fastjson.version>
         <jfinal-weixin.version>2.3</jfinal-weixin.version>
+        <java-mp.version>3.3.0</java-mp.version>
+        <user-wechat-api.version>0.0.1-SNAPSHOT</user-wechat-api.version>
     </properties>
 
     <dependencies>
@@ -33,7 +35,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -72,7 +73,13 @@
         <dependency>
             <groupId>com.zhc</groupId>
             <artifactId>user-wechat-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${user-wechat-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+            <version>${java-mp.version}</version>
         </dependency>
     </dependencies>
 

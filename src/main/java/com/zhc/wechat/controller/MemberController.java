@@ -1,6 +1,7 @@
 package com.zhc.wechat.controller;
 
 import com.user.wechat.api.dto.MemberDTO;
+import com.user.wechat.api.request.MemberRequest;
 import com.zhc.wechat.service.MemberService;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,11 @@ public class MemberController {
     @PostMapping("member/delete")
     public Boolean deleteMember(@RequestParam("memberId") String memberId) {
         return memberService.deleteMember(memberId);
+    }
+
+    @PostMapping("member/update")
+    public Boolean updateMember(@RequestBody MemberRequest memberRequest) {
+        return memberService.updateMMember(memberRequest);
     }
 
 }
