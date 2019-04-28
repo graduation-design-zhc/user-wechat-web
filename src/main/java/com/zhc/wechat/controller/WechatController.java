@@ -1,8 +1,11 @@
 package com.zhc.wechat.controller;
 
-import com.user.wechat.api.dto.MemberDTO;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 import com.user.wechat.api.request.MemberRequest;
 import com.zhc.wechat.config.WechatAccountConfig;
+import com.zhc.wechat.response.RedirectUrlDTO;
 import com.zhc.wechat.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
@@ -36,12 +39,15 @@ public class WechatController {
     private MemberService memberService;
 
     @GetMapping("/authorize")
-    public String authorize(@RequestParam("returnUrl") String returnUrl) {
+    @ResponseBody
+    public RedirectUrlDTO authorize(@RequestParam("returnUrl") String returnUrl) {
         // 1 配置 2 调用方法
         String url = wechatAccountConfig.getRedirectUrl() + "/wechat/memberInfo";
         log.info("...authorize, url={}", url);
-        String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_BASE, URLEncoder.encode(returnUrl));
-        return "redirect:" + redirectUrl;
+        String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, URLEncoder.encode(returnUrl));
+        RedirectUrlDTO redirectUrlDTO = new RedirectUrlDTO();
+        redirectUrlDTO.setUrl(redirectUrl);
+        return redirectUrlDTO;
     }
 
     @GetMapping("/memberInfo")
@@ -60,7 +66,7 @@ public class WechatController {
         memberRequest.setOpenId(wxMpUser.getOpenId());
         memberRequest.setGender(wxMpUser.getSex());
         memberRequest.setAvatar(wxMpUser.getHeadImgUrl());
-        memberRequest.setNickName(wxMpUser.getNickname());
+        memberRequest.setNickname(wxMpUser.getNickname());
         memberService.saveMember(memberRequest);
         return "redirect:" + returnUrl + "?openid=" + wxMpUser.getOpenId();
     }

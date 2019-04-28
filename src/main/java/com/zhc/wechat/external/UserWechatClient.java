@@ -7,10 +7,7 @@ import com.user.wechat.api.request.UserRequest;
 import com.user.wechat.api.response.Response;
 import jdk.nashorn.internal.ir.BaseNode;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,6 +41,9 @@ public interface UserWechatClient {
     Response<Boolean> deleteMember(@RequestParam("memberId") String memberId);
 
     @PostMapping("member/update")
-    Response<Boolean> updateMember(@RequestBody MemberRequest memberRequest);
+    Response<MemberDTO> updateMember(@RequestBody MemberRequest memberRequest);
+
+    @PostMapping("member/getMember")
+    Response<MemberDTO> getMemberByOpenId(@RequestParam("openId") String openId);
 
 }

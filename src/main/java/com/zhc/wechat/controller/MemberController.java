@@ -30,8 +30,13 @@ public class MemberController {
     }
 
     @PostMapping("member/update")
-    public Boolean updateMember(@RequestBody MemberRequest memberRequest) {
+    public MemberDTO updateMember(@RequestBody MemberRequest memberRequest) {
         return memberService.updateMMember(memberRequest);
+    }
+
+    @GetMapping("member/getMember")
+    public MemberDTO getMemberByOpenId (@RequestParam("openId") String openId) {
+        return memberService.getMemberByOpenId(openId);
     }
 
 }

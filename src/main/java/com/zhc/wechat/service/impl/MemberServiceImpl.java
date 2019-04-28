@@ -40,17 +40,26 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Boolean updateMMember(MemberRequest memberRequest) {
-        Response<Boolean> response = userWechatClient.updateMember(memberRequest);
+    public MemberDTO updateMMember(MemberRequest memberRequest) {
+        Response<MemberDTO> response = userWechatClient.updateMember(memberRequest);
         if (response.isSuccess()) {
             return response.getData();
         }
-        return false;
+        return null;
     }
 
     @Override
     public MemberDTO saveMember(MemberRequest memberRequest) {
         Response<MemberDTO> response = userWechatClient.addMember(memberRequest);
+        if (response.isSuccess()) {
+            return response.getData();
+        }
+        return null;
+    }
+
+    @Override
+    public MemberDTO getMemberByOpenId(String openId) {
+        Response<MemberDTO> response = userWechatClient.getMemberByOpenId(openId);
         if (response.isSuccess()) {
             return response.getData();
         }

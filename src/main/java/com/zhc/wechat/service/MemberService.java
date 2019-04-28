@@ -15,8 +15,10 @@ public interface MemberService {
 
     Boolean deleteMember(String memberId);
 
-    Boolean updateMMember(MemberRequest memberRequest);
+    MemberDTO updateMMember(MemberRequest memberRequest);
 
     MemberDTO saveMember(MemberRequest memberRequest);
+
+    MemberDTO getMemberByOpenId(String openId);
 
 }
