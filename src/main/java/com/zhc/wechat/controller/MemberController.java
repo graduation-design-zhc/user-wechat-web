@@ -2,6 +2,7 @@ package com.zhc.wechat.controller;
 
 import com.user.wechat.api.dto.MemberDTO;
 import com.user.wechat.api.request.MemberRequest;
+import com.zhc.wechat.dal.response.MemberInfoDTO;
 import com.zhc.wechat.service.MemberService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class MemberController {
     private MemberService memberService;
 
     @GetMapping("member/list")
-    public List<MemberDTO> getMemberList() {
+    public List<MemberInfoDTO> getMemberList() {
         return memberService.getMemberList();
     }
 

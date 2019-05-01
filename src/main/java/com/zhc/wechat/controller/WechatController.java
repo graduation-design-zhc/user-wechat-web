@@ -1,8 +1,5 @@
 package com.zhc.wechat.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.google.gson.JsonObject;
 import com.user.wechat.api.request.MemberRequest;
 import com.zhc.wechat.config.WechatAccountConfig;
 import com.zhc.wechat.response.RedirectUrlDTO;
@@ -68,7 +65,7 @@ public class WechatController {
         memberRequest.setAvatar(wxMpUser.getHeadImgUrl());
         memberRequest.setNickname(wxMpUser.getNickname());
         memberService.saveMember(memberRequest);
-        return "redirect:" + returnUrl + "?openid=" + wxMpUser.getOpenId();
+        return "redirect:" + returnUrl + "?openId=" + wxMpUser.getOpenId();
     }
 
 }

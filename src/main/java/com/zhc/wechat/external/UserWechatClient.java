@@ -1,11 +1,13 @@
 package com.zhc.wechat.external;
 
+import com.user.wechat.api.dto.MemberCardDTO;
+import com.user.wechat.api.dto.MemberCardLogDTO;
 import com.user.wechat.api.dto.MemberDTO;
 import com.user.wechat.api.dto.UserDTO;
+import com.user.wechat.api.request.MemberBalanceRequest;
 import com.user.wechat.api.request.MemberRequest;
 import com.user.wechat.api.request.UserRequest;
 import com.user.wechat.api.response.Response;
-import jdk.nashorn.internal.ir.BaseNode;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +45,25 @@ public interface UserWechatClient {
     @PostMapping("member/update")
     Response<MemberDTO> updateMember(@RequestBody MemberRequest memberRequest);
 
-    @PostMapping("member/getMember")
+    @PostMapping("member/getMemberByOpenId")
     Response<MemberDTO> getMemberByOpenId(@RequestParam("openId") String openId);
+
+    @PostMapping("member/getMemberByMemberId")
+    Response<MemberDTO> getMemberByMemberId(@RequestParam("memberId") String memberId);
+
+    @PostMapping("member/cards")
+    Response<List<MemberCardDTO>> getCardsByMemberIds(@RequestParam("memberIds") List<String> memberIds);
+
+    @PostMapping("/member/getCardByMemberId")
+    Response<MemberCardDTO> getCardByMemberId(@RequestParam("memberId") String memberId);
+
+    @PostMapping("member/addBalance")
+    Response<Boolean> addBalance(@RequestBody MemberBalanceRequest memberBalanceRequest);
+
+    @PostMapping("member/getAllCardLog")
+    Response<List<MemberCardLogDTO>> getAllCardLog();
+
+    @PostMapping("member/getMemberByMemberIds")
+    Response<List<MemberDTO>> getMemberByMemberIds(@RequestParam("memberIds") List<String> memberIds);
 
 }

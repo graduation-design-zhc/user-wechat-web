@@ -2,6 +2,7 @@ package com.zhc.wechat.service;
 
 import com.user.wechat.api.dto.MemberDTO;
 import com.user.wechat.api.request.MemberRequest;
+import com.zhc.wechat.dal.response.MemberInfoDTO;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface MemberService {
 
-    List<MemberDTO> getMemberList();
+    List<MemberInfoDTO> getMemberList();
 
     Boolean deleteMember(String memberId);
 

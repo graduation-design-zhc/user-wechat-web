@@ -5,6 +5,7 @@ import com.user.wechat.api.request.UserRequest;
 import com.user.wechat.api.response.Response;
 import com.zhc.wechat.external.UserWechatClient;
 import com.zhc.wechat.service.UserService;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
