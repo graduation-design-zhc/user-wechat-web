@@ -18,6 +18,7 @@ import java.net.URLEncoder;
 
 
 /**
+ * 微信授权认证
  * @author zhanghuachang
  * @date 2019-04-25
  */
@@ -42,6 +43,7 @@ public class WechatController {
         String url = wechatAccountConfig.getRedirectUrl() + "/wechat/memberInfo";
         log.info("...authorize, url={}", url);
         String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, URLEncoder.encode(returnUrl));
+        log.info("...redirectUrl={}", redirectUrl);
         RedirectUrlDTO redirectUrlDTO = new RedirectUrlDTO();
         redirectUrlDTO.setUrl(redirectUrl);
         return redirectUrlDTO;
@@ -57,13 +59,14 @@ public class WechatController {
             wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
             wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, "zh_CN");
         } catch (WxErrorException e) {
-            log.error("【微信网页授权】{}", e);
+            log.error("【微信网页授权失败！】{}", e);
         }
         MemberRequest memberRequest = new MemberRequest();
         memberRequest.setOpenId(wxMpUser.getOpenId());
         memberRequest.setGender(wxMpUser.getSex());
         memberRequest.setAvatar(wxMpUser.getHeadImgUrl());
         memberRequest.setNickname(wxMpUser.getNickname());
+        log.info("【微信授权成功！】member={}", memberRequest);
         memberService.saveMember(memberRequest);
         return "redirect:" + returnUrl + "?openId=" + wxMpUser.getOpenId();
     }

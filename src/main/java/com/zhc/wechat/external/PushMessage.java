@@ -53,7 +53,7 @@ public class PushMessage {
         try {
             wxMpService.getTemplateMsgService().sendTemplateMsg(wxMpTemplateMessage);
         } catch (WxErrorException e) {
-            log.error("【微信模板消息发送失败】, e={}", e);
+            log.error("【微信充值提醒模板消息发送失败】, e={}", e);
         }
     }
 

@@ -18,7 +18,7 @@ public class AsyncConfig {
 
     @Bean
     public ThreadPoolExecutor asyncWorker() {
-        return new ThreadPoolExecutor(10, 100, 100, TimeUnit.SECONDS, new LinkedBlockingDeque<>(1000));
+        return new ThreadPoolExecutor(10, 100, 50, TimeUnit.SECONDS, new LinkedBlockingDeque<>(1000));
     }
 
 }

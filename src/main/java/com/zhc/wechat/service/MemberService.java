@@ -20,6 +20,8 @@ public interface MemberService {
 
     MemberDTO saveMember(MemberRequest memberRequest);
 
-    MemberDTO getMemberByOpenId(String openId);
+    MemberInfoDTO getMemberByOpenId(String openId);
+
+    MemberDTO getMemberByMemberId(String memberId);
 
 }

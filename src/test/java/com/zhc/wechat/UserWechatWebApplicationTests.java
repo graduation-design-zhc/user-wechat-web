@@ -7,6 +7,9 @@ import com.user.wechat.api.request.UserRequest;
 import com.user.wechat.api.response.Response;
 import com.zhc.wechat.external.UserWechatClient;
 import com.zhc.wechat.utils.WeChatUtil;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +26,9 @@ public class UserWechatWebApplicationTests {
 
     @Resource
     private UserWechatClient userWechatClient;
+
+    @Resource
+    private WxMpService wxMpService;
 
     @Test
     public void contextLoads() {
@@ -102,6 +108,16 @@ public class UserWechatWebApplicationTests {
         Response<List<MemberCardDTO>> response = userWechatClient.getCardsByMemberIds(memberIds);
         System.out.println(response);
 
+    }
+
+    @Test
+    public void wxMenu() {
+        try {
+            WxMpMenu wxMpMenu = wxMpService.getMenuService().menuGet();
+            System.out.println(wxMpMenu.toString());
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
     }
 
 }

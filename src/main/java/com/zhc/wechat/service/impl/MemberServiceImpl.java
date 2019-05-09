@@ -86,8 +86,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDTO getMemberByOpenId(String openId) {
-        Response<MemberDTO> response = userWechatClient.getMemberByOpenId(openId);
+    public MemberInfoDTO getMemberByOpenId(String openId) {
+        MemberDTO memberDTO = userWechatClient.getMemberByOpenId(openId).getData();
+        MemberInfoDTO memberInfoDTO = MemberInfoConvert.convert(memberDTO);
+        MemberCardDTO memberCardDTO = userWechatClient.getCardByMemberId(memberDTO.getMemberId()).getData();
+        memberInfoDTO.setMemberBalance(memberCardDTO.getMemberBalance().toString());
+        memberInfoDTO.setMemberIntegral(memberCardDTO.getMemberIntegral().toString());
+        return memberInfoDTO;
+    }
+
+    @Override
+    public MemberDTO getMemberByMemberId(String memberId) {
+        Response<MemberDTO> response = userWechatClient.getMemberByMemberId(memberId);
         if (response.isSuccess()) {
             return response.getData();
         }
