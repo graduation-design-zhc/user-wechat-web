@@ -2,6 +2,8 @@ package com.zhc.wechat.external;
 
 import com.user.wechat.api.dto.MemberCardDTO;
 import com.user.wechat.api.dto.MemberDTO;
+import com.user.wechat.api.dto.OrderDTO;
+import com.user.wechat.api.dto.OrderDetailDTO;
 import com.user.wechat.api.request.MemberBalanceRequest;
 import com.zhc.wechat.config.WechatAccountConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author zhanghuachang
@@ -33,6 +36,10 @@ public class PushMessage {
     @Resource
     private UserWechatClient userWechatClient;
 
+    /**
+     * 充值成功模板消息
+     * @param memberBalanceRequest
+     */
     @Async("asyncWorker")
     public void sendAddBalanceMessage(MemberBalanceRequest memberBalanceRequest) {
         MemberDTO memberDTO = userWechatClient.getMemberByMemberId(memberBalanceRequest.getMemberId()).getData();
@@ -52,8 +59,42 @@ public class PushMessage {
         wxMpTemplateMessage.setData(data);
         try {
             wxMpService.getTemplateMsgService().sendTemplateMsg(wxMpTemplateMessage);
+            log.info("【微信充值提醒模板消息发送成功】");
         } catch (WxErrorException e) {
             log.error("【微信充值提醒模板消息发送失败】, e={}", e);
+        }
+    }
+
+    /**
+     * 消费提醒模板消息
+     * @param orderDTO
+     */
+    @Async("asyncWorker")
+    public void sendOrderSucessMessage(OrderDTO orderDTO){
+        MemberDTO memberDTO = userWechatClient.getMemberByMemberId(orderDTO.getMemberId()).getData();
+        WxMpTemplateMessage wxMpTemplateMessage = new WxMpTemplateMessage();
+        wxMpTemplateMessage.setTemplateId(wechatAccountConfig.getTemplateId().get("consumptionDetail"));
+        wxMpTemplateMessage.setToUser(memberDTO.getOpenId());
+        List<WxMpTemplateData> data = Arrays.asList(
+                new WxMpTemplateData("first", "购买成功！"),
+                new WxMpTemplateData("keyword1", orderDTO.getOrderId(), "#173177"),
+                new WxMpTemplateData("keyword2", orderDTO
+                        .getOrderDetailDTOList()
+                        .stream()
+                        .map(OrderDetailDTO::getProductName)
+                        .collect(Collectors.joining(", ")),
+                        "#173177"),
+                new WxMpTemplateData("keyword3","¥" + orderDTO.getOrderPrice(), "#173177"),
+                new WxMpTemplateData("keyword4", orderDTO.getOrderIntegral().toString(), "#173177"),
+                new WxMpTemplateData("keyword5", orderDTO.getCreateTime(), "#173177"),
+                new WxMpTemplateData("remark", "祝您生活愉快！")
+        );
+        wxMpTemplateMessage.setData(data);
+        try {
+            wxMpService.getTemplateMsgService().sendTemplateMsg(wxMpTemplateMessage);
+            log.info("【微信购买成功提醒模板消息发送成功】");
+        } catch (WxErrorException e) {
+            log.error("【微信购买成功提醒模板消息发送失败】, e={}", e);
         }
     }
 

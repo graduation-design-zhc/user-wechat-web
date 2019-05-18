@@ -36,13 +36,18 @@ public class MemberController {
     }
 
     @GetMapping("member/getMember")
-    public MemberInfoDTO getMemberByOpenId (@RequestParam("openId") String openId) {
+    public MemberInfoDTO getMemberByOpenId(@RequestParam("openId") String openId) {
         return memberService.getMemberByOpenId(openId);
     }
 
     @GetMapping("member/getMemberByMemberId")
-    public MemberDTO getMemberByMemberId (@RequestParam("memberId") String memberId) {
+    public MemberDTO getMemberByMemberId(@RequestParam("memberId") String memberId) {
         return memberService.getMemberByMemberId(memberId);
+    }
+
+    @GetMapping("member/getMemberByPhone")
+    public MemberInfoDTO getMemberByPhone(@RequestParam("phone") String phone) {
+        return memberService.getMemberByPhone(phone);
     }
 
 }

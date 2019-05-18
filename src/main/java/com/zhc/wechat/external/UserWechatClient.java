@@ -1,11 +1,9 @@
 package com.zhc.wechat.external;
 
-import com.user.wechat.api.dto.MemberCardDTO;
-import com.user.wechat.api.dto.MemberCardLogDTO;
-import com.user.wechat.api.dto.MemberDTO;
-import com.user.wechat.api.dto.UserDTO;
+import com.user.wechat.api.dto.*;
 import com.user.wechat.api.request.MemberBalanceRequest;
 import com.user.wechat.api.request.MemberRequest;
+import com.user.wechat.api.request.OrderRequest;
 import com.user.wechat.api.request.UserRequest;
 import com.user.wechat.api.response.Response;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -51,6 +49,9 @@ public interface UserWechatClient {
     @PostMapping("member/getMemberByMemberId")
     Response<MemberDTO> getMemberByMemberId(@RequestParam("memberId") String memberId);
 
+    @PostMapping("member/getMemberByPhone")
+    Response<MemberDTO> getMemberByPhone(@RequestParam("phone") String phone);
+
     @PostMapping("member/cards")
     Response<List<MemberCardDTO>> getCardsByMemberIds(@RequestParam("memberIds") List<String> memberIds);
 
@@ -66,4 +67,15 @@ public interface UserWechatClient {
     @PostMapping("member/getMemberByMemberIds")
     Response<List<MemberDTO>> getMemberByMemberIds(@RequestParam("memberIds") List<String> memberIds);
 
+    @PostMapping("member/order")
+    Response<OrderDTO> memberOrder(@RequestBody OrderRequest orderRequest);
+
+    @PostMapping("category/getList")
+    Response<List<ProductCategoryDTO>> getProductCategoryList();
+
+    @PostMapping("product/getByCategoryType")
+    Response<List<ProductDTO>> getProductByCategoryType(@RequestParam("categoryType") Integer categoryType);
+
+    @PostMapping("product/getByProductId")
+    Response<ProductDTO> getProductByProductId(@RequestParam("productId") String productId);
 }

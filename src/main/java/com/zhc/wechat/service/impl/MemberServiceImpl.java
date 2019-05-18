@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -88,11 +89,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberInfoDTO getMemberByOpenId(String openId) {
         MemberDTO memberDTO = userWechatClient.getMemberByOpenId(openId).getData();
-        MemberInfoDTO memberInfoDTO = MemberInfoConvert.convert(memberDTO);
-        MemberCardDTO memberCardDTO = userWechatClient.getCardByMemberId(memberDTO.getMemberId()).getData();
-        memberInfoDTO.setMemberBalance(memberCardDTO.getMemberBalance().toString());
-        memberInfoDTO.setMemberIntegral(memberCardDTO.getMemberIntegral().toString());
-        return memberInfoDTO;
+        return memberInfoConvert(memberDTO);
     }
 
     @Override
@@ -102,6 +99,20 @@ public class MemberServiceImpl implements MemberService {
             return response.getData();
         }
         return null;
+    }
+
+    @Override
+    public MemberInfoDTO getMemberByPhone(String phone) {
+        MemberDTO memberDTO = userWechatClient.getMemberByPhone(phone).getData();
+        return memberInfoConvert(memberDTO);
+    }
+
+    private MemberInfoDTO memberInfoConvert(MemberDTO memberDTO) {
+        MemberInfoDTO memberInfoDTO = MemberInfoConvert.convert(memberDTO);
+        MemberCardDTO memberCardDTO = userWechatClient.getCardByMemberId(memberDTO.getMemberId()).getData();
+        memberInfoDTO.setMemberBalance(memberCardDTO.getMemberBalance().toString());
+        memberInfoDTO.setMemberIntegral(memberCardDTO.getMemberIntegral().toString());
+        return memberInfoDTO;
     }
 
 }
