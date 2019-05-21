@@ -16,6 +16,7 @@ public class WxMpMenuVO {
     private String type;
     private String name;
     private String url;
+    private String menuLevel;
     @JsonProperty(value = "sub_button")
     List<WxMpMenuVO> subButton;
 

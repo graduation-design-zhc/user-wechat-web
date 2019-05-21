@@ -4,6 +4,7 @@ import com.zhc.wechat.dal.response.CardLogDTO;
 import com.zhc.wechat.service.MemberCardLogService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -23,6 +24,11 @@ public class MemberCardLogController {
     @GetMapping("member/getAllCardLog")
     public List<CardLogDTO> getAllCardLog() {
         return memberCardLogService.getAllMemberCardLog();
+    }
+
+    @GetMapping("member/getAllCardLogByPhone")
+    public List<CardLogDTO> getAllCardLogByPhone(@RequestParam("phone") String phone) {
+        return memberCardLogService.getLogByPhone(phone);
     }
 
 }

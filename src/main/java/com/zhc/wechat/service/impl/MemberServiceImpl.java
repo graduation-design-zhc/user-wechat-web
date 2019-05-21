@@ -10,6 +10,7 @@ import com.zhc.wechat.external.UserWechatClient;
 import com.zhc.wechat.service.MemberService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -105,6 +106,16 @@ public class MemberServiceImpl implements MemberService {
     public MemberInfoDTO getMemberByPhone(String phone) {
         MemberDTO memberDTO = userWechatClient.getMemberByPhone(phone).getData();
         return memberInfoConvert(memberDTO);
+    }
+
+    @Override
+    public List<MemberInfoDTO> getMemberListByPhone(String phone) {
+        if (StringUtils.isEmpty(phone)) {
+            return Collections.emptyList();
+        }
+        List<MemberInfoDTO> memberInfoDTOS = new ArrayList<>(4);
+        memberInfoDTOS.add(getMemberByPhone(phone));
+        return memberInfoDTOS;
     }
 
     private MemberInfoDTO memberInfoConvert(MemberDTO memberDTO) {

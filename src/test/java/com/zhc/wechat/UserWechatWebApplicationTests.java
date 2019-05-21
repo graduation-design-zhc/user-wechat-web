@@ -5,8 +5,11 @@ import com.user.wechat.api.dto.MemberCardDTO;
 import com.user.wechat.api.dto.UserDTO;
 import com.user.wechat.api.request.UserRequest;
 import com.user.wechat.api.response.Response;
+import com.zhc.wechat.dal.model.WxMpMenuVO;
 import com.zhc.wechat.external.UserWechatClient;
 import com.zhc.wechat.utils.WeChatUtil;
+import me.chanjar.weixin.common.bean.menu.WxMenu;
+import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
@@ -112,12 +115,27 @@ public class UserWechatWebApplicationTests {
 
     @Test
     public void wxMenu() {
+        //            WxMpMenu wxMpMenu = wxMpService.getMenuService().menuGet();
+//            System.out.println(wxMpMenu.toString());
+        WxMenu wxMenu = new WxMenu();
+
+        WxMpMenu wxMpMenu1 = new WxMpMenu();
+        //创建一级菜单
+        WxMenuButton button1=new WxMenuButton();
+        button1.setType("view"); //点击事件按钮
+        button1.setName("会员中心");
+//        button1.setKey("key1"); //根据标志获取点击菜单
+        button1.setUrl("http://sougou.com");
+        List<WxMenuButton> buttons = new ArrayList<>();
+        buttons.add(button1);
+        wxMenu.setButtons(buttons);
         try {
-            WxMpMenu wxMpMenu = wxMpService.getMenuService().menuGet();
-            System.out.println(wxMpMenu.toString());
+            String s = wxMpService.getMenuService().menuCreate(wxMenu);
+            System.out.println(s);
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
+
     }
 
 }

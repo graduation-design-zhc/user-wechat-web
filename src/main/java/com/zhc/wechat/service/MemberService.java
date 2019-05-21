@@ -26,4 +26,6 @@ public interface MemberService {
 
     MemberInfoDTO getMemberByPhone(String phone);
 
+    List<MemberInfoDTO> getMemberListByPhone(String phone);
+
 }

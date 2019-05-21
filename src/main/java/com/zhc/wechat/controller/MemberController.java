@@ -50,4 +50,9 @@ public class MemberController {
         return memberService.getMemberByPhone(phone);
     }
 
+    @GetMapping("member/getMemberListByPhone")
+    public List<MemberInfoDTO> getMemberListByPhone(@RequestParam("phone") String phone) {
+        return memberService.getMemberListByPhone(phone);
+    }
+
 }

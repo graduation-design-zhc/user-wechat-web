@@ -78,4 +78,14 @@ public interface UserWechatClient {
 
     @PostMapping("product/getByProductId")
     Response<ProductDTO> getProductByProductId(@RequestParam("productId") String productId);
+
+    @PostMapping("member/getOrderLog")
+    Response<List<OrderLogDTO>> getOrderLogList();
+
+    @PostMapping("member/getOrderLogByPhone")
+    Response<List<OrderLogDTO>> getOrderLogByPhone(@RequestParam("phone") String phone);
+
+    @PostMapping("member/getAllCardLogByPhone")
+    Response<List<MemberCardLogDTO>> getAllCardLogByPhone(@RequestParam("phone") String phone);
+
 }

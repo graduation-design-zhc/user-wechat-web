@@ -1,7 +1,9 @@
 package com.zhc.wechat.service;
 
-import com.user.wechat.api.dto.OrderDTO;
+import com.user.wechat.api.dto.OrderLogDTO;
 import com.user.wechat.api.request.OrderRequest;
+
+import java.util.List;
 
 /**
  * @author zhanghuachang
@@ -10,5 +12,9 @@ import com.user.wechat.api.request.OrderRequest;
 public interface OrderService {
 
     Boolean memberOrder(OrderRequest orderRequest);
+
+    List<OrderLogDTO> getOrderLogList();
+
+    List<OrderLogDTO> getOrderLogListByPhone(String phone);
 
 }

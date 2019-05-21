@@ -1,6 +1,7 @@
 package com.zhc.wechat.service.impl;
 
 import com.user.wechat.api.dto.OrderDTO;
+import com.user.wechat.api.dto.OrderLogDTO;
 import com.user.wechat.api.request.OrderRequest;
 import com.user.wechat.api.response.Response;
 import com.zhc.wechat.external.PushMessage;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author zhanghuachang
@@ -33,5 +35,23 @@ public class OrderServiceImpl implements OrderService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<OrderLogDTO> getOrderLogList() {
+        Response<List<OrderLogDTO>> response = userWechatClient.getOrderLogList();
+        if (response.isSuccess()) {
+            return response.getData();
+        }
+        return null;
+    }
+
+    @Override
+    public List<OrderLogDTO> getOrderLogListByPhone(String phone) {
+        Response<List<OrderLogDTO>> response = userWechatClient.getOrderLogByPhone(phone);
+        if (response.isSuccess()) {
+            return response.getData();
+        }
+        return null;
     }
 }
