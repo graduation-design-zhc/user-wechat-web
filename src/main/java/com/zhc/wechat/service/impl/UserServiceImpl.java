@@ -33,7 +33,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserLogin(UserRequest userRequest) {
-        return userWechatClient.getUserLogin(userRequest).getData();
+        Response<UserDTO> response = userWechatClient.getUserLogin(userRequest);
+        if (response.isSuccess()) {
+            return response.getData();
+        }
+        return null;
     }
 
     @Override

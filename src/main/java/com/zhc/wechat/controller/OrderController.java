@@ -21,8 +21,8 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("member/order")
-    public Response memberOrder(@RequestBody OrderRequest orderRequest) {
-        return Response.success(orderService.memberOrder(orderRequest));
+    public Boolean memberOrder(@RequestBody OrderRequest orderRequest) {
+        return orderService.memberOrder(orderRequest);
     }
 
     @GetMapping("member/getOrderLog")

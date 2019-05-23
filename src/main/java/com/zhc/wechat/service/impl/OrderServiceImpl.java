@@ -28,11 +28,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Boolean memberOrder(OrderRequest orderRequest) {
-        Response<OrderDTO> response = userWechatClient.memberOrder(orderRequest);
-        if (response.isSuccess()) {
-            //异步发送消息
-            pushMessage.sendOrderSucessMessage(response.getData());
-            return true;
+        try {
+            Response<OrderDTO> response = userWechatClient.memberOrder(orderRequest);
+            if (response.isSuccess()) {
+                //异步发送消息
+                pushMessage.sendOrderSucessMessage(response.getData());
+                return true;
+            }
+        } catch (Exception e) {
+            log.error("购买失败！", e.getMessage());
         }
         return false;
     }

@@ -4,10 +4,7 @@ import com.user.wechat.api.dto.UserDTO;
 import com.user.wechat.api.request.UserRequest;
 import com.zhc.wechat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +13,7 @@ import java.util.List;
  * @date 2019-04-20
  */
 @RestController
+@RequestMapping("wechat")
 public class UserController {
 
     @Autowired

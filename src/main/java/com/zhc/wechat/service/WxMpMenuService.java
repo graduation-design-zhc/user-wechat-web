@@ -12,4 +12,6 @@ public interface WxMpMenuService {
 
     List<WxMpMenuVO> getMenu();
 
+    Boolean createMenu(List<WxMpMenuVO> wxMpMenuVOS);
+
 }

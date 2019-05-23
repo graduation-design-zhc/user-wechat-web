@@ -2,6 +2,9 @@ package com.zhc.wechat.service.impl;
 
 import com.zhc.wechat.dal.model.WxMpMenuVO;
 import com.zhc.wechat.service.WxMpMenuService;
+import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.bean.menu.WxMenu;
+import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
@@ -16,6 +19,7 @@ import java.util.List;
  * @date 2019-05-19
  */
 @Service
+@Slf4j
 public class WxMpMenuServiceImpl implements WxMpMenuService {
 
     @Resource
@@ -39,5 +43,26 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Boolean createMenu(List<WxMpMenuVO> wxMpMenuVOS) {
+        WxMenu wxMenu = new WxMenu();
+        List<WxMenuButton> buttons = new ArrayList<>();
+        wxMpMenuVOS.forEach(e -> {
+            WxMenuButton button = new WxMenuButton();
+            button.setUrl(e.getUrl());
+            button.setName(e.getName());
+            button.setType(e.getType());
+            buttons.add(button);
+        });
+        wxMenu.setButtons(buttons);
+        try {
+            wxMpService.getMenuService().menuCreate(wxMenu);
+            return true;
+        } catch (WxErrorException e) {
+            log.error("菜单创建失败!", e);
+        }
+        return false;
     }
 }

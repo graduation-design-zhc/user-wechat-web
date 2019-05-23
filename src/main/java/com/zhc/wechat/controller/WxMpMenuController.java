@@ -2,9 +2,7 @@ package com.zhc.wechat.controller;
 
 import com.zhc.wechat.dal.model.WxMpMenuVO;
 import com.zhc.wechat.service.WxMpMenuService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +21,11 @@ public class WxMpMenuController {
     @GetMapping("/menu/getList")
     public List<WxMpMenuVO> getMenuList() {
         return wxMpMenuService.getMenu();
+    }
+
+    @PostMapping("menu/createMenu")
+    public Boolean createMenu(@RequestBody List<WxMpMenuVO> menuVOS) {
+        return wxMpMenuService.createMenu(menuVOS);
     }
 
 }
